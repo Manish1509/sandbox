@@ -3,7 +3,7 @@ Date: 2nd Mar 15
 
 
 class producer extends uvm_component;
-
+// $display
 endclass: producer
 
 
