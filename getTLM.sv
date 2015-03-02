@@ -10,3 +10,7 @@ endclass: producer
 class consumer extends uvm_component;
 
 endclass: consumer
+
+class env extends uvm_env;
+
+endclass: env
