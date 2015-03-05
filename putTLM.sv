@@ -2,7 +2,6 @@
 // or browse Examples
 
 `include "uvm_macros.svh"
-//`include "uvm.svh"
 
 module test;
   
@@ -12,25 +11,19 @@ import uvm_pkg::*;
     `uvm_object_utils(txn)
     
    typedef enum {READ, WRITE} kind_t;
-//   typedef enum {WRITE} kind_t;
-//   enum {READ, WRITE} kind;
-//   kind = READ;
     rand bit [7:0] addr;
     rand byte data;
-    rand kind_t kind;
-//   string kind = READ;
+    kind_t kind;
         
     function new (string name = "");
       super.new(name);
-//      kind = WRITE;
-//      kind = $urandom_range(0,1);
+      kind = kind'($urandom_range(0,1));
     endfunction: new
     
  endclass: txn
 
 class producer extends uvm_component;
   `uvm_component_utils(producer)
-//  uvm_blocking_put_port #(int) my_port;
   uvm_blocking_put_port #(txn) my_port;
   
   function new (string name, uvm_component parent);
@@ -43,9 +36,7 @@ class producer extends uvm_component;
       begin
         txn t;
         t = txn::type_id::create("t", this);
-        //      my_port.put(packet);
         `uvm_info("PID", $sformatf("Packet no. %d is sent", packet), UVM_LOW)
-//      my_port.put(packet);
         my_port.put(t);
         #10;
       end
@@ -55,7 +46,6 @@ endclass: producer
 
 class consumer extends uvm_component;
   `uvm_component_utils(consumer)
-//  uvm_blocking_put_imp #(int, consumer) my_export;
   uvm_blocking_put_imp #(txn, consumer) my_export;
   
   function new (string name, uvm_component parent);
@@ -63,24 +53,18 @@ class consumer extends uvm_component;
     my_export = new("my_export", this);
   endfunction: new
   
-//  task put (int p);
-//    `uvm_info("RID", $sformatf("Packet no. %d Receieved", p), UVM_MEDIUM);
-//    endtask: put
   task put (txn t);
     case(t.kind)
       t.READ: $display("Read transaction");
       t.WRITE: $display("Write transaction");
-//    `uvm_info("RID", $sformatf("Packet no. %d Receieved", p), UVM_MEDIUM);
     endcase
     endtask: put
 endclass: consumer
 
 
 class env extends uvm_env;
-//  `uvm_component_utils(env)
-  
-//  producer p1;
-//  consumer c1;
+  `uvm_component_utils(env)
+
   
   function new (string name = "env");
     super.new(name);
