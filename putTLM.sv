@@ -63,8 +63,6 @@ endclass: consumer
 
 
 class env extends uvm_env;
-  `uvm_component_utils(env)
-
   
   function new (string name = "env");
     super.new(name);
