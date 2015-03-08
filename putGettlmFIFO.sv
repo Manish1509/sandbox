@@ -44,10 +44,13 @@ module test;
     /// Run task
     task run_phase (uvm_phase phase);
       for(int i=1; i<11; i++)
+      begin
         my_txn txn;
       txn = my_txn::type_id::create("txn", this);
       my_put_port.put(txn);
       `uvm_info("PID", $sformatf("Transaction no. %0d sent as %s", i, txn.kind), UVM_LOW);
+      #10;
+      end
     endtask: run_phase
     
   endclass: producer
@@ -68,10 +71,13 @@ module test;
     /// Run task
     task run_phase (uvm_phase phase);
       for(int ii=1; ii<11; ii++)
+      begin
         my_txn t;
       t = my_txn::type_id::create("t", this);
       my_get_port.get(t);
       `uvm_info("CID", $sformatf("Transaction no. %0d is received as %s", ii, t.kind), UVM_LOW);
+      #10;
+      end
     endtask: run_phase
     
   endclass: consumer
