@@ -29,7 +29,7 @@ module test;
   endclass: my_txn
   
   /// Producer declaration
-  class producer extends uvm_component #(my_txn);
+  class producer extends uvm_component;
     `uvm_component_utils(producer)
     
     /// put port declaration
@@ -53,7 +53,7 @@ module test;
   endclass: producer
   
   /// Consumer declaration
-  class consumer extends uvm_component #(my_txn);
+  class consumer extends uvm_component;
     `uvm_component_utils(consumer)
     
     /// get port declaration
